@@ -175,7 +175,6 @@
 
     <div class="pages-container">
 
-        <!-- ======================== PREM PAGE ======================== -->
         <div class="page active" id="page-prem">
             <section class="prem-form-section">
                 <div class="offer-banner">
@@ -257,7 +256,6 @@
             </section>
         </div>
 
-        <!-- ======================== BOOST PAGE ======================== -->
         <div class="page" id="page-boost">
             <section class="prem-form-section">
                 <div class="offer-banner">
@@ -297,7 +295,6 @@
             </section>
         </div>
 
-        <!-- ======================== GIFT PAGE ======================== -->
         <div class="page" id="page-gift">
             <section class="prem-form-section">
                 <div class="offer-banner">
@@ -310,7 +307,7 @@
 
                 <div class="gift-soon">Gifts (so'm)</div>
 
-                <form id="giftForm">
+                <form id="giftForm" novalidate>
                     <div class="gift-grid">
 
                         <div class="gift-card-option">
@@ -423,14 +420,13 @@
                             </div>
                         </div>
 
-                    </div><!-- /gift-grid -->
-                    <div id="gift-items-error" class="error-message" style="display: none; text-align: center; margin-bottom: 15px;">Iltimos, kamida bitta gift tanlang!</div>
+                    </div><div id="gift-items-error" class="error-message" style="display: none; text-align: center; margin-bottom: 15px;">Iltimos, kamida bitta gift tanlang!</div>
 
                     <div class="prem-order-form" style="margin-top: 20px;">
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Telegram Username:</label>
-                                <input type="text" id="gift-username" placeholder="@username" required>
+                                <input type="text" id="gift-username" name="username" placeholder="@username" required>
                                 <div class="error-message">telegram @username kiriting!</div>
                             </div>
                             <div class="form-group">
@@ -452,10 +448,7 @@
             </section>
         </div>
 
-    </div><!-- /pages-container -->
-
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-menu">
+    </div><nav class="bottom-menu">
         <button class="tab-item active" onclick="switchPage('prem', this)">
             <div class="tab-icon">💎</div>
             <div class="tab-label">Prem</div>
@@ -529,13 +522,15 @@
 
         async function sendToTelegram(message) {
             try {
-                await fetch(API_ENDPOINT, {
+                const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message })
                 });
+                return response.ok;
             } catch (error) {
-                console.error('Buyurtma yuborishda xato:', error);
+                console.error('Order yuborishda xato:', error);
+                return false;
             }
         }
 
@@ -543,7 +538,7 @@
             form.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
         }
 
-        document.getElementById('premForm').addEventListener('submit', e => {
+        document.getElementById('premForm').addEventListener('submit', async e => {
             e.preventDefault();
             clearErrors(e.target);
             
@@ -566,12 +561,19 @@
             
             if (!hasError) {
                 const message = `<b>💎 PREMIUM BUYURTMA</b>\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}\n<b>Davomiyligi:</b> ${planText}`;
-                sendToTelegram(message);
-                alert("Prem Buyurtma qabul qilindi!");
+                await sendToTelegram(message);
+                
+                // Success page ga o'tish
+                const orderData = {
+                    username: username,
+                    contact: contact || 'Kiritilmadi',
+                    plan: planText
+                };
+                window.location.href = `success.html?type=prem&data=${encodeURIComponent(JSON.stringify(orderData))}`;
             }
         });
 
-        document.getElementById('boostForm').addEventListener('submit', e => {
+        document.getElementById('boostForm').addEventListener('submit', async e => {
             e.preventDefault();
             clearErrors(e.target);
             
@@ -592,17 +594,25 @@
             
             if (!hasError) {
                 const message = `<b>⚡ BOOST BUYURTMA</b>\n\n<b>Link:</b> ${link}\n<b>Boost Soni:</b> ${count}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
-                sendToTelegram(message);
-                alert("Boost Buyurtma qabul qilindi!");
+                await sendToTelegram(message);
+                
+                // Success page ga o'tish
+                const orderData = {
+                    link: link,
+                    count: count,
+                    contact: contact || 'Kiritilmadi'
+                };
+                window.location.href = `success.html?type=boost&data=${encodeURIComponent(JSON.stringify(orderData))}`;
             }
         });
 
-        document.getElementById('giftForm').addEventListener('submit', e => {
+        document.getElementById('giftForm').addEventListener('submit', async e => {
             e.preventDefault();
             
             const username = document.getElementById('gift-username').value.trim();
             const contact = document.getElementById('gift-contact').value.trim();
-            const usernameGroup = document.getElementById('gift-username').closest('.form-group');
+            const usernameInput = document.getElementById('gift-username');
+            const usernameGroup = usernameInput.closest('.form-group');
             const itemsErrorEl = document.getElementById('gift-items-error');
             const items = [];
             let total = 0;
@@ -622,22 +632,35 @@
             
             let hasError = false;
             
+            // Username validation
             if (!username) {
                 usernameGroup.classList.add('error');
                 hasError = true;
             }
             
+            // Items validation
             if (items.length === 0) { 
                 itemsErrorEl.style.display = 'block';
                 hasError = true;
             }
             
-            if (!hasError) {
-                const itemsList = items.join('\n');
-                const message = `<b>🎁 GIFT BUYURTMA</b>\n\n<b>Giftlar:</b>\n${itemsList}\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
-                sendToTelegram(message);
-                alert("Buyurtma qabul qilindi!\n" + items.join(', '));
+            // Agar xato bo'lsa - submit qilma!
+            if (hasError) {
+                return;
             }
+            
+            // Barcha ok bo'lsa - telegram ga yubor
+            const itemsList = items.join('\n');
+            const message = `<b>🎁 GIFT BUYURTMA</b>\n\n<b>Giftlar:</b>\n${itemsList}\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
+            await sendToTelegram(message);
+            
+            // Success page ga o'tish
+            const orderData = {
+                items: items.join(', '),
+                username: username,
+                contact: contact || 'Kiritilmadi'
+            };
+            window.location.href = `success.html?type=gift&data=${encodeURIComponent(JSON.stringify(orderData))}`;
         });
     </script>
 

@@ -1,0 +1,16 @@
+{
+  "name": "prem-bek",
+  "version": "1.0.0",
+  "description": "Prem-Bek order management system with Telegram integration",
+  "main": "api/send-order.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.11"
+  },
+  "devDependencies": {
+    "vercel": "^33.0.0"
+  }
+}
