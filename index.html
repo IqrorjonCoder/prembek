@@ -79,21 +79,59 @@
         .page { display: none !important; }
         .page.active { display: block !important; }
 
-        /* ── Bottom menu kichikroq ── */
+        /* ── Bottom menu — original gradient style with sideways Stars tab ── */
         .bottom-menu {
             position: fixed !important;
             bottom: 0 !important;
             left: 0 !important;
             right: 0 !important;
-            padding: 0.5rem 0.6rem !important;
-            gap: 0.5rem !important;
+            display: flex !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            padding: 0.58rem 0.58rem !important;
+            gap: 0.58rem !important;
+            background: var(--main-gradient) !important;
+            border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 -5px 30px rgba(102, 126, 234, 0.3) !important;
+            height: 70px !important;
+        }
+        .bottom-menu::-webkit-scrollbar {
+            display: none !important;
         }
         .tab-item {
-            padding: 0.45rem 0.8rem !important;
-            gap: 0.15rem !important;
+            flex: 0 0 auto !important;
+            min-width: 115px !important;
+            padding: 0.5rem 0.86rem !important;
+            height: auto !important;
         }
-        .tab-icon { font-size: 1.2rem !important; }
-        .tab-label { font-size: 0.65rem !important; }
+
+        @media (min-width: 768px) {
+            .bottom-menu {
+                justify-content: space-around !important;
+                overflow-x: visible !important;
+                -webkit-overflow-scrolling: auto !important;
+                padding: 0.32rem 0.32rem !important;
+                gap: 0.32rem !important;
+            }
+            .tab-item {
+                flex: 1 !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                padding: 0.28rem 0.48rem !important;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .bottom-menu {
+                padding: 0.32rem 0.32rem !important;
+                gap: 0.32rem !important;
+            }
+            .tab-item {
+                padding: 0.28rem 0.48rem !important;
+            }
+        }
 
         /* ── Gift card ── */
         .gift-card-box {
@@ -175,6 +213,7 @@
 
     <div class="pages-container">
 
+        <!-- ======================== PREM PAGE ======================== -->
         <div class="page active" id="page-prem">
             <section class="prem-form-section">
                 <div class="offer-banner">
@@ -256,6 +295,7 @@
             </section>
         </div>
 
+        <!-- ======================== BOOST PAGE ======================== -->
         <div class="page" id="page-boost">
             <section class="prem-form-section">
                 <div class="offer-banner">
@@ -295,6 +335,7 @@
             </section>
         </div>
 
+        <!-- ======================== GIFT PAGE ======================== -->
         <div class="page" id="page-gift">
             <section class="prem-form-section">
                 <div class="offer-banner">
@@ -307,7 +348,7 @@
 
                 <div class="gift-soon">Gifts (so'm)</div>
 
-                <form id="giftForm" novalidate>
+                <form id="giftForm">
                     <div class="gift-grid">
 
                         <div class="gift-card-option">
@@ -420,13 +461,14 @@
                             </div>
                         </div>
 
-                    </div><div id="gift-items-error" class="error-message" style="display: none; text-align: center; margin-bottom: 15px;">Iltimos, kamida bitta gift tanlang!</div>
+                    </div><!-- /gift-grid -->
+                    <div id="gift-items-error" class="error-message" style="display: none; text-align: center; margin-bottom: 15px;">Iltimos, kamida bitta gift tanlang!</div>
 
                     <div class="prem-order-form" style="margin-top: 20px;">
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Telegram Username:</label>
-                                <input type="text" id="gift-username" name="username" placeholder="@username" required>
+                                <input type="text" id="gift-username" placeholder="@username" required>
                                 <div class="error-message">telegram @username kiriting!</div>
                             </div>
                             <div class="form-group">
@@ -448,7 +490,24 @@
             </section>
         </div>
 
-    </div><nav class="bottom-menu">
+        <div class="page" id="page-stars">
+            <section class="prem-form-section">
+                <div class="offer-banner">
+                    <div class="offer-banner-main">
+                        <span class="header-icon">⭐</span>
+                        <span>Stars</span>
+                    </div>
+                    <div class="offer-banner-sub">Yangi bo'lim tez orada</div>
+                </div>
+                <div class="page-content" style="padding: 1rem;">
+                    <p>Stars sahifasi hali tayyorlanmoqda...</p>
+                </div>
+            </section>
+        </div>
+    </div><!-- /pages-container -->
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-menu">
         <button class="tab-item active" onclick="switchPage('prem', this)">
             <div class="tab-icon">💎</div>
             <div class="tab-label">Prem</div>
@@ -460,6 +519,10 @@
         <button class="tab-item" onclick="switchPage('gift', this)">
             <div class="tab-icon">🎁</div>
             <div class="tab-label">Gift</div>
+        </button>
+        <button class="tab-item" onclick="switchPage('stars', this)">
+            <div class="tab-icon">⭐</div>
+            <div class="tab-label">Stars</div>
         </button>
     </nav>
 
@@ -522,15 +585,13 @@
 
         async function sendToTelegram(message) {
             try {
-                const response = await fetch(API_ENDPOINT, {
+                await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message })
                 });
-                return response.ok;
             } catch (error) {
-                console.error('Order yuborishda xato:', error);
-                return false;
+                console.error('Buyurtma yuborishda xato:', error);
             }
         }
 
@@ -538,7 +599,7 @@
             form.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
         }
 
-        document.getElementById('premForm').addEventListener('submit', async e => {
+        document.getElementById('premForm').addEventListener('submit', e => {
             e.preventDefault();
             clearErrors(e.target);
             
@@ -561,19 +622,12 @@
             
             if (!hasError) {
                 const message = `<b>💎 PREMIUM BUYURTMA</b>\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}\n<b>Davomiyligi:</b> ${planText}`;
-                await sendToTelegram(message);
-                
-                // Success page ga o'tish
-                const orderData = {
-                    username: username,
-                    contact: contact || 'Kiritilmadi',
-                    plan: planText
-                };
-                window.location.href = `success.html?type=prem&data=${encodeURIComponent(JSON.stringify(orderData))}`;
+                sendToTelegram(message);
+                alert("Prem Buyurtma qabul qilindi!");
             }
         });
 
-        document.getElementById('boostForm').addEventListener('submit', async e => {
+        document.getElementById('boostForm').addEventListener('submit', e => {
             e.preventDefault();
             clearErrors(e.target);
             
@@ -594,25 +648,17 @@
             
             if (!hasError) {
                 const message = `<b>⚡ BOOST BUYURTMA</b>\n\n<b>Link:</b> ${link}\n<b>Boost Soni:</b> ${count}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
-                await sendToTelegram(message);
-                
-                // Success page ga o'tish
-                const orderData = {
-                    link: link,
-                    count: count,
-                    contact: contact || 'Kiritilmadi'
-                };
-                window.location.href = `success.html?type=boost&data=${encodeURIComponent(JSON.stringify(orderData))}`;
+                sendToTelegram(message);
+                alert("Boost Buyurtma qabul qilindi!");
             }
         });
 
-        document.getElementById('giftForm').addEventListener('submit', async e => {
+        document.getElementById('giftForm').addEventListener('submit', e => {
             e.preventDefault();
             
             const username = document.getElementById('gift-username').value.trim();
             const contact = document.getElementById('gift-contact').value.trim();
-            const usernameInput = document.getElementById('gift-username');
-            const usernameGroup = usernameInput.closest('.form-group');
+            const usernameGroup = document.getElementById('gift-username').closest('.form-group');
             const itemsErrorEl = document.getElementById('gift-items-error');
             const items = [];
             let total = 0;
@@ -632,35 +678,22 @@
             
             let hasError = false;
             
-            // Username validation
             if (!username) {
                 usernameGroup.classList.add('error');
                 hasError = true;
             }
             
-            // Items validation
             if (items.length === 0) { 
                 itemsErrorEl.style.display = 'block';
                 hasError = true;
             }
             
-            // Agar xato bo'lsa - submit qilma!
-            if (hasError) {
-                return;
+            if (!hasError) {
+                const itemsList = items.join('\n');
+                const message = `<b>🎁 GIFT BUYURTMA</b>\n\n<b>Giftlar:</b>\n${itemsList}\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
+                sendToTelegram(message);
+                alert("Buyurtma qabul qilindi!\n" + items.join(', '));
             }
-            
-            // Barcha ok bo'lsa - telegram ga yubor
-            const itemsList = items.join('\n');
-            const message = `<b>🎁 GIFT BUYURTMA</b>\n\n<b>Giftlar:</b>\n${itemsList}\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
-            await sendToTelegram(message);
-            
-            // Success page ga o'tish
-            const orderData = {
-                items: items.join(', '),
-                username: username,
-                contact: contact || 'Kiritilmadi'
-            };
-            window.location.href = `success.html?type=gift&data=${encodeURIComponent(JSON.stringify(orderData))}`;
         });
     </script>
 
