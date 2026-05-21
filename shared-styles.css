@@ -385,6 +385,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     gap: 0.3rem;
     padding: 0.7rem 1.2rem;
     color: rgba(255, 255, 255, 0.8);
@@ -415,6 +416,12 @@ header {
 }
 
 .tab-icon {
+    font-size: 0.9rem;
+}
+
+.tab-label {
+    font-size: 0.7rem;
+    font-weight: 650;
     font-size: 1.5rem;
 }
 
