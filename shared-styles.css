@@ -388,14 +388,14 @@ header {
     gap: 0.5rem;
     gap: 0.3rem;
     padding: 0.7rem 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.955);
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
     flex: 1;
     text-align: center;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.055);
     backdrop-filter: blur(10px);
 }
 
