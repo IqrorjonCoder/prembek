@@ -6,93 +6,127 @@
     <title>✅ Buyurtma Qabul Qilindi - Prem_Bek</title>
     <link rel="stylesheet" href="shared-styles.css">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            background-color: #f4f7ff;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(102, 126, 234, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(118, 75, 162, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(102, 126, 234, 0.1) 0px, transparent 40%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            padding: 20px;
         }
 
-        .success-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 50px 40px;
+        .success-card {
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 16px 40px rgba(102, 126, 234, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
+            padding: 40px 35px;
             text-align: center;
-            max-width: 500px;
-            width: 90%;
-            animation: slideUp 0.6s ease-out;
+            max-width: 480px;
+            width: 100%;
+            animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
         }
 
-        @keyframes slideUp {
+        @keyframes cardAppear {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px) scale(0.98);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
+        .success-icon-wrapper {
+            position: relative;
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 24px;
+        }
+
+        .success-icon-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: pulseGlow 2s infinite;
+        }
+
         .checkmark {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 30px;
+            width: 84px;
+            height: 84px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50px;
+            font-size: 42px;
             color: white;
-            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         @keyframes popIn {
-            0% {
-                transform: scale(0);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.25); opacity: 0; }
+            100% { transform: scale(1); opacity: 0.2; }
         }
 
         h1 {
-            color: #333;
-            font-size: 32px;
-            margin: 20px 0;
-            font-weight: 700;
+            color: #0f172a;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 28px;
+            line-height: 1.5;
+            padding: 0 10px;
         }
 
-        .details {
-            background: #f8f9ff;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            border-radius: 10px;
+        .details-box {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            padding: 16px 20px;
             text-align: left;
-            margin: 30px 0;
+            margin-bottom: 20px;
         }
 
         .detail-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e2e8f0;
             font-size: 14px;
         }
 
@@ -101,230 +135,281 @@
         }
 
         .detail-label {
-            color: #666;
+            color: #475569;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .detail-value {
-            color: #333;
+            color: #0f172a;
+            font-weight: 700;
+            background: #ffffff;
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            max-width: 60%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .info-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #78350f;
+            line-height: 1.5;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-card strong {
+            color: #451a03;
             font-weight: 700;
         }
 
-        .info-box {
-            background: #fff8e1;
-            border: 2px solid #ffa000;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
+        .info-card.blue-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+        
+        .info-card.blue-box strong {
+            color: #14532d;
+        }
+
+        .timer-box {
+            margin-top: 24px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             font-size: 14px;
-            color: #e65100;
-            line-height: 1.6;
+            color: #334155;
+            font-weight: 600;
+            width: 100%;
         }
 
-        .info-box strong {
-            color: #e65100;
-            display: block;
-            margin-bottom: 8px;
+        .timer-text {
+            color: #4f46e5;
+            font-weight: 700;
         }
 
-        .buttons {
+        .buttons-group {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .btn {
             flex: 1;
-            min-width: 150px;
-            padding: 14px 24px;
+            padding: 14px 20px;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.35);
+            opacity: 0.95;
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
         }
 
         .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-            border: 2px solid #667eea;
+            background: #ffffff;
+            color: #334155;
+            border: 1px solid #cbd5e1;
         }
 
         .btn-secondary:hover {
-            background: #f8f9ff;
+            background: #f8fafc;
+            border-color: #94a3b8;
+            color: #0f172a;
         }
 
-        .timer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
-            color: #666;
-            font-size: 14px;
+        .btn-secondary:active {
+            transform: translateY(1px);
         }
 
-        .timer-text {
-            color: #667eea;
-            font-weight: 700;
-            font-size: 18px;
-        }
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
 
-        .icon-emoji {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .success-container {
-                padding: 40px 25px;
+            .success-card {
+                padding: 30px 20px;
+                border-radius: 20px;
             }
 
             h1 {
-                font-size: 26px;
+                font-size: 21px;
             }
 
-            .buttons {
+            .buttons-group {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .btn {
-                min-width: auto;
+                width: 100%;
+                padding: 12px 16px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="success-container">
-        <div class="checkmark">✅</div>
+    <div class="success-card">
+        <div class="success-icon-wrapper">
+            <div class="success-icon-bg"></div>
+            <div class="checkmark">✓</div>
+        </div>
+        
         <h1 id="title">Buyurtma Qabul Qilindi!</h1>
         
         <p class="subtitle" id="subtitle">
-            Sizning buyurtmangiz muvaffaqiyatli taqdim etildi
+            Sizning buyurtmangiz muvaffaqiyatli taqdim etildi.
         </p>
 
-        <div class="details" id="details">
-            <!-- Details will be added here -->
+        <div class="details-box" id="details">
+            <!-- Ma'lumotlar JS orqali dinamik joylashadi -->
         </div>
 
-        <div class="info-box">
-            <strong>⏱️ Aktivatsiya vaqti:</strong>
-            Sizning buyurtmangiz <strong>2 daqiqada</strong> amalga oshiriladi!
+        <div class="info-card blue-box">
+            <span>⏱️ <strong>Aktivatsiya vaqti:</strong> Sizning buyurtmangiz <strong>2 daqiqada</strong> to'liq amalga oshiriladi!</span>
         </div>
 
-        <div class="info-box">
-            <strong>📌 Diqqat:</strong>
-            Agar to'lov bilan bog'liq muammo bo'lsa, aloqa uchun kiritgan raqamga yozamiz.
+        <div class="info-card">
+            <span>📌 <strong>Diqqat:</strong> Agar to'lovda muammo bo'lsa, siz ko'rsatgan aloqa raqamiga aloqaga chiqamiz.</span>
         </div>
 
-        <div class="timer">
-            <div>Asosiy sahifaga qaytish:</div>
-            <div class="timer-text"><span id="countdown">10</span> soniyada...</div>
+        <div class="timer-box">
+            <span>Asosiy sahifaga qaytish:</span>
+            <span class="timer-text" id="countdown">10 soniyada...</span>
         </div>
 
-        <div class="buttons">
+        <div class="buttons-group">
             <button class="btn btn-primary" onclick="goHome()">🏠 Asosiy Sahifaga</button>
             <button class="btn btn-secondary" onclick="newOrder()">➕ Yangi Buyurtma</button>
         </div>
     </div>
 
     <script>
-        // Get order details from URL parameters
         function getQueryParam(param) {
             const url = new URL(window.location.href);
             return url.searchParams.get(param);
         }
 
-        // Get order type
         const orderType = getQueryParam('type') || 'unknown';
         const orderData = getQueryParam('data') ? JSON.parse(decodeURIComponent(getQueryParam('data'))) : {};
 
-        // Update title and details based on order type
         function displayOrderDetails() {
             const detailsDiv = document.getElementById('details');
             const title = document.getElementById('title');
             const subtitle = document.getElementById('subtitle');
 
             if (orderType === 'prem') {
-                title.textContent = '💎 Premium Buyurtma Qabul Qilindi!';
-                subtitle.textContent = 'Telegram Premium tez orada faollashtiriladi';
+                title.textContent = '💎 Premium Qabul Qilindi!';
+                subtitle.textContent = 'Telegram Premium obunasi tez fursatda faollashtiriladi';
                 
                 detailsDiv.innerHTML = `
                     <div class="detail-row">
-                        <span class="detail-label">Telegram Username:</span>
+                        <span class="detail-label">👤 Username:</span>
                         <span class="detail-value">${orderData.username || '-'}</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Premium Davomiyligi:</span>
+                        <span class="detail-label">📅 Tarif davomiyligi:</span>
                         <span class="detail-value">${orderData.plan || '-'}</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Aloqa:</span>
+                        <span class="detail-label">📞 Aloqa raqami:</span>
                         <span class="detail-value">${orderData.contact || 'Kiritilmadi'}</span>
                     </div>
                 `;
             } 
             else if (orderType === 'boost') {
-                title.textContent = '⚡ Boost Buyurtma Qabul Qilindi!';
-                subtitle.textContent = 'Telegram kanalining boosti tez orada qo\'shiladi';
+                title.textContent = '⚡ Boost Qabul Qilindi!';
+                subtitle.textContent = 'Kanal / Guruh faolligini oshirish buyurtmasi kiritildi';
                 
                 detailsDiv.innerHTML = `
                     <div class="detail-row">
-                        <span class="detail-label">Kanal/Guruh Linki:</span>
+                        <span class="detail-label">🔗 Kanal/Guruh havolasi:</span>
                         <span class="detail-value">${orderData.link || '-'}</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Boost Soni:</span>
+                        <span class="detail-label">🚀 Boost soni:</span>
                         <span class="detail-value">${orderData.count || '-'} ta</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Aloqa:</span>
+                        <span class="detail-label">📞 Aloqa raqami:</span>
                         <span class="detail-value">${orderData.contact || 'Kiritilmadi'}</span>
                     </div>
                 `;
             }
             else if (orderType === 'gift') {
-                title.textContent = '🎁 Gift Buyurtma Qabul Qilindi!';
-                subtitle.textContent = 'Giftlar tez orada yuboriladi';
+                title.textContent = '🎁 Gift Qabul Qilindi!';
+                subtitle.textContent = 'Telegram sovg\'gasi (Gift) tez orada yuboriladi';
                 
                 detailsDiv.innerHTML = `
                     <div class="detail-row">
-                        <span class="detail-label">Giftlar:</span>
+                        <span class="detail-label">📦 Sovg'alar:</span>
                         <span class="detail-value">${orderData.items || '-'}</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Telegram Username:</span>
+                        <span class="detail-label">👤 Username:</span>
                         <span class="detail-value">${orderData.username || '-'}</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">Aloqa:</span>
+                        <span class="detail-label">📞 Aloqa raqami:</span>
                         <span class="detail-value">${orderData.contact || 'Kiritilmadi'}</span>
+                    </div>
+                `;
+            } else {
+                title.textContent = '✅ Buyurtma Qabul Qilindi!';
+                subtitle.textContent = 'Buyurtmangiz muvaffaqiyatli tizimga qo\'shildi';
+                detailsDiv.innerHTML = `
+                    <div class="detail-row" style="justify-content: center; color: #475569;">
+                        <span>Siz bilan tez orada bog'lanamiz.</span>
                     </div>
                 `;
             }
         }
 
-        // Display order details on page load
         displayOrderDetails();
 
-        // Countdown timer
-        let countdown = 10;
+        let countdown = 15;
         const countdownEl = document.getElementById('countdown');
         
         const timer = setInterval(() => {
             countdown--;
-            countdownEl.textContent = countdown;
+            countdownEl.textContent = countdown + " soniyada...";
             
             if (countdown <= 0) {
                 clearInterval(timer);
@@ -332,13 +417,11 @@
             }
         }, 1000);
 
-        // Navigation functions
         function goHome() {
             window.location.href = 'index.html';
         }
 
         function newOrder() {
-            // Stop the timer
             clearInterval(timer);
             window.location.href = 'index.html';
         }
