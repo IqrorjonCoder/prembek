@@ -80,7 +80,6 @@
         .page.active { display: block !important; }
 
         /* ── Bottom menu kichikroq ── */
-        /* ── Bottom menu — original gradient style with sideways Stars tab ── */
         .bottom-menu {
             position: fixed !important;
             bottom: 0 !important;
@@ -92,7 +91,7 @@
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
             padding: 0.58rem 0.58rem !important;
-            gap: 0.58rem !important;
+            gap: 0.28rem !important;
             background: var(--main-gradient) !important;
             border-top: 2px solid rgba(255, 255, 255, 0.2) !important;
             box-shadow: 0 -5px 30px rgba(102, 126, 234, 0.3) !important;
@@ -103,7 +102,7 @@
         }
         .tab-item {
             flex: 0 0 auto !important;
-            min-width: 115px !important;
+            min-width: 110px !important;
             padding: 0.5rem 0.86rem !important;
             height: auto !important;
         }
@@ -119,7 +118,7 @@
             .tab-item {
                 flex: 1 !important;
                 min-width: 0 !important;
-                max-width: none !important;
+                max-width: 290px !important;
                 padding: 0.28rem 0.48rem !important;
             }
         }
@@ -133,7 +132,6 @@
                 padding: 0.28rem 0.48rem !important;
             }
         }
-
 
         /* ── Gift card ── */
         .gift-card-box {
@@ -150,7 +148,6 @@
             align-items: center;
         }
 
-        /* − tugma — yuqori chap */
         .gc-btn {
             position: absolute;
             top: 6px;
@@ -172,7 +169,6 @@
         .gc-btn-plus  { right: 6px; background: #5b9cf6; color: #fff; }
         .gc-btn-plus:hover { background: #3a7de8; }
 
-        /* Rasm — center, tugmalar ostida */
         .gift-png-icon {
             width: 52px;
             height: 52px;
@@ -180,7 +176,6 @@
             display: block;
         }
 
-        /* Narx — sariq pill */
         .gift-star-price {
             margin-top: 8px;
             background: #fff8e1;
@@ -193,7 +188,6 @@
             white-space: nowrap;
         }
 
-        /* Counter — narx ostida alohida */
         .gc-qty-badge {
             display: block;
             margin-top: 4px;
@@ -204,10 +198,84 @@
             text-align: center;
         }
 
-        /* Tanlangan karta */
         .gift-card-box.has-qty {
             border-color: #5b9cf6;
             box-shadow: 0 0 0 3px rgba(91,156,246,0.15);
+        }
+
+        /* ── STARS SECTION STYLES (YANGILANGAN PREM USLUBLI DIZAYN) ── */
+        .stars-username-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+        }
+        .stars-username-row input {
+            flex: 1;
+        }
+        .btn-self {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            height: 46px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-self:hover {
+            background: #2563eb;
+        }
+        .stars-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 1.2rem 0 0.6rem;
+            text-align: left;
+        }
+        .stars-packages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px; /* Orasidagi masofa qisqartirildi */
+            margin-top: 8px;
+        }
+        .stars-package-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff; /* Prem-pagedagidek oq fon */
+            border: 2px solid #e0e0e0; /* Standart kontur line */
+            border-radius: 10px;
+            padding: 6px 12px; /* Kichikroq o'lcham ichki padding - balandligi kichraytirildi */
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .stars-package-item:hover {
+            border-color: #b4c6ef;
+        }
+        .stars-package-item.selected {
+            border-color: #667eea; /* Prem kabi tanlangandagi gradient/ko'k rang */
+            background: #f8faff;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.15);
+        }
+        .stars-pkg-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333333; /* To'q rangli matn */
+            font-size: 0.88rem; /* Kichikroq font - hajmi kichraytirildi */
+            font-weight: 600;
+        }
+        .stars-pkg-icon {
+            font-size: 1.05rem;
+        }
+        .stars-pkg-price {
+            color: #667eea; /* Chiroyli binafsha/ko'k tus */
+            font-weight: 700;
+            font-size: 0.88rem; /* Kichikroq font - hajmi kichraytirildi */
         }
     </style>
 </head>
@@ -493,13 +561,80 @@
                 <div class="offer-banner">
                     <div class="offer-banner-main">
                         <span class="header-icon">⭐</span>
-                        <span>Stars</span>
+                        <span>Telegram Stars</span>
                     </div>
-                    <div class="offer-banner-sub">Yangi bo'lim tez orada</div>
+                    <div class="offer-banner-sub">1 daqiqada tezkor va xavfsiz yetkazib berish</div>
                 </div>
-                <div class="page-content" style="padding: 1rem;">
-                    <p>Stars sahifasi hali tayyorlanmoqda...</p>
-                </div>
+                
+                <form class="prem-order-form" id="starsForm" novalidate>
+                    <!-- 1-input: Telegram Username -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="stars-username">Telegram Username:</label>
+                            <div class="stars-username-row">
+                                <input type="text" id="stars-username" name="username" placeholder="@username" required>
+                            </div>
+                            <div class="error-message">telegram @username kiriting!</div>
+                        </div>
+                    </div>
+
+                    <!-- 2-input: Stars miqdori -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="stars-title" style="margin-top:0;">Stars Miqdori (minimal 50):</label>
+                            <input type="number" id="stars-count" name="count" placeholder="50 dan 100,000 tagacha" min="50" max="100000" required>
+                            <div class="error-message">minimal 50 ta stars olishingiz mumkin!</div>
+                        </div>
+                    </div>
+
+                    <!-- Table / To'plamlar ro'yxati -->
+                    <div class="form-group full-width">
+                        <label class="stars-title">Yoki To'plam:</label>
+                        <div class="stars-packages-list">
+                            <div class="stars-package-item" data-amount="50" onclick="selectStarsPackage(this, 50)">
+                                <div class="stars-pkg-left">
+                                    <span class="stars-pkg-icon">⭐</span>
+                                    <span>50 Stars</span>
+                                </div>
+                                <div class="stars-pkg-price">12 000 UZS</div>
+                            </div>
+                            <div class="stars-package-item" data-amount="100" onclick="selectStarsPackage(this, 100)">
+                                <div class="stars-pkg-left">
+                                    <span class="stars-pkg-icon">⭐</span>
+                                    <span>100 Stars</span>
+                                </div>
+                                <div class="stars-pkg-price">24 000 UZS</div>
+                            </div>
+                            <div class="stars-package-item" data-amount="200" onclick="selectStarsPackage(this, 200)">
+                                <div class="stars-pkg-left">
+                                    <span class="stars-pkg-icon">⭐</span>
+                                    <span>200 Stars</span>
+                                </div>
+                                <div class="stars-pkg-price">48 000 UZS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-input: Aloqa uchun -->
+                    <div class="form-row" style="margin-top: 1.2rem;">
+                        <div class="form-group">
+                            <label for="stars-contact">Aloqa Uchun (ixtiyoriy):</label>
+                            <input type="text" id="stars-contact" name="contact" placeholder="@user yoki nomer">
+                        </div>
+                    </div>
+
+                    <!-- Jami to'lov -->
+                    <div class="total-box" id="stars-total-box">
+                        <span class="total-label">Jami to'lov:</span>
+                        <span class="total-amount" id="stars-total">0 so'm</span>
+                    </div>
+
+                    <button type="submit" class="btn-submit">🚀 Buyurtma Berish</button>
+                    <div class="form-info">
+                        <p>✓ To'lovni amalga oshirgandan so'ng, 2 daqiqada Stars hisobingizga tushadi</p>
+                        <p>✓ Telegram Stars rasmiy reseller hamkori</p>
+                    </div>
+                </form>
             </section>
         </div>
 
@@ -512,17 +647,17 @@
             <div class="tab-icon">💎</div>
             <div class="tab-label">Prem</div>
         </button>
-        <button class="tab-item" onclick="switchPage('boost', this)">
-            <div class="tab-icon">⚡</div>
-            <div class="tab-label">Boost</div>
+        <button class="tab-item" onclick="switchPage('stars', this)">
+            <div class="tab-icon">⭐</div>
+            <div class="tab-label">Stars</div>
         </button>
         <button class="tab-item" onclick="switchPage('gift', this)">
             <div class="tab-icon">🎁</div>
             <div class="tab-label">Gift</div>
         </button>
-        <button class="tab-item" onclick="switchPage('stars', this)">
-            <div class="tab-icon">⭐</div>
-            <div class="tab-label">Stars</div>
+        <button class="tab-item" onclick="switchPage('boost', this)">
+            <div class="tab-icon">⚡</div>
+            <div class="tab-label">Boost</div>
         </button>
     </nav>
 
@@ -580,6 +715,42 @@
             updateGiftTotal();
         }
 
+        /* ── STARS LOGIC (image_d7ef9d.png & image_d7ef99.png) ── */
+        const STAR_UNIT_PRICE = 240; // 1 ta Star = 240 so'm (50 tasi 12000 so'm bo'lishi uchun)
+        const starsCountInput = document.getElementById('stars-count');
+
+        function fillOwnUsername() {
+            // "O'zim" tugmasi bosilganda test uchun yoki telegram muhiti uchun username kiritish
+            document.getElementById('stars-username').value = "@my_username";
+        }
+
+        function selectStarsPackage(element, amount) {
+            // Barcha paketlardan tanlanganlik klassini olib tashlash
+            document.querySelectorAll('.stars-package-item').forEach(item => item.classList.remove('selected'));
+            // Bosilgan paketga klass qo'shish
+            element.classList.add('selected');
+            // Inputga qiymatni yozish
+            starsCountInput.value = amount;
+            updateStarsTotal();
+        }
+
+        function updateStarsTotal() {
+            const count = parseInt(starsCountInput.value) || 0;
+            const total = count * STAR_UNIT_PRICE;
+            document.getElementById('stars-total').textContent = formatSum(total);
+
+            // Paket chiroqlarini input raqamiga moslab o'zgartirish
+            document.querySelectorAll('.stars-package-item').forEach(item => {
+                if (parseInt(item.dataset.amount) === count) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        }
+
+        starsCountInput.addEventListener('input', updateStarsTotal);
+
         /* ── Form validation & submits ── */
         const API_ENDPOINT = '/api/send-order';
 
@@ -626,7 +797,6 @@
                 const message = `<b>💎 PREMIUM BUYURTMA</b>\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}\n<b>Davomiyligi:</b> ${planText}`;
                 await sendToTelegram(message);
                 
-                // Success page ga o'tish
                 const orderData = {
                     username: username,
                     contact: contact || 'Kiritilmadi',
@@ -659,7 +829,6 @@
                 const message = `<b>⚡ BOOST BUYURTMA</b>\n\n<b>Link:</b> ${link}\n<b>Boost Soni:</b> ${count}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
                 await sendToTelegram(message);
                 
-                // Success page ga o'tish
                 const orderData = {
                     link: link,
                     count: count,
@@ -680,7 +849,6 @@
             const items = [];
             let total = 0;
             
-            // Clear previous errors
             usernameGroup.classList.remove('error');
             itemsErrorEl.style.display = 'none';
             
@@ -695,35 +863,64 @@
             
             let hasError = false;
             
-            // Username validation
             if (!username) {
                 usernameGroup.classList.add('error');
                 hasError = true;
             }
             
-            // Items validation
             if (items.length === 0) { 
                 itemsErrorEl.style.display = 'block';
                 hasError = true;
             }
             
-            // Agar xato bo'lsa - submit qilma!
             if (hasError) {
                 return;
             }
             
-            // Barcha ok bo'lsa - telegram ga yubor
             const itemsList = items.join('\n');
             const message = `<b>🎁 GIFT BUYURTMA</b>\n\n<b>Giftlar:</b>\n${itemsList}\n\n<b>Telegram Username:</b> ${username}\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
             await sendToTelegram(message);
             
-            // Success page ga o'tish
             const orderData = {
                 items: items.join(', '),
                 username: username,
                 contact: contact || 'Kiritilmadi'
             };
             window.location.href = `success.html?type=gift&data=${encodeURIComponent(JSON.stringify(orderData))}`;
+        });
+
+        /* ── STARS FORM SUBMIT ── */
+        document.getElementById('starsForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            clearErrors(e.target);
+
+            const username = document.getElementById('stars-username').value.trim();
+            const count = parseInt(starsCountInput.value) || 0;
+            const contact = document.getElementById('stars-contact').value.trim();
+            let hasError = false;
+
+            if (!username) {
+                document.getElementById('stars-username').closest('.form-group').classList.add('error');
+                hasError = true;
+            }
+
+            if (count < 50 || count > 100000) {
+                starsCountInput.closest('.form-group').classList.add('error');
+                hasError = true;
+            }
+
+            if (!hasError) {
+                const message = `<b>⭐ STARS BUYURTMA</b>\n\n<b>Telegram Username:</b> ${username}\n<b>Stars Miqdori:</b> ${count} ta\n<b>Aloqa Uchun:</b> ${contact || 'Kiritilmadi'}`;
+                await sendToTelegram(message);
+
+                // Success page'ga o'tish (Siz uchun success.html dinamik ravishda ma'lumotlarni chiqaradi)
+                const orderData = {
+                    plan: count + ' Stars',
+                    username: username,
+                    contact: contact || 'Kiritilmadi'
+                };
+                window.location.href = `success.html?type=prem&data=${encodeURIComponent(JSON.stringify(orderData))}`;
+            }
         });
     </script>
 
